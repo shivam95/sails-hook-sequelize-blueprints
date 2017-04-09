@@ -113,7 +113,7 @@ module.exports = function addToCollection (req, res) {
           var create = { };
           create[associationAttr] = parentPk;
           create[childAttr] = supposedChildPk;
-          ThroughModel.create(create).then(function(throughModelInstance) {
+          ThroughModel.create(create, {include:{all:true}}).then(function(throughModelInstance) {
               return cb();
             })
             .catch(function(err) {
@@ -128,7 +128,7 @@ module.exports = function addToCollection (req, res) {
             var create = { };
             create[associationAttr] = parentPk;
             create[childAttr] = childInstanceId;
-            ThroughModel.create(create).then(function(throughModelInstance) {
+            ThroughModel.create(create, {include:{all:true}}).then(function(throughModelInstance) {
                 return cb();
               })
               .catch(function(err) {
@@ -163,7 +163,7 @@ module.exports = function addToCollection (req, res) {
       function createChild(customCb) {
 
 
-        ChildModel.create(child).then(function(newChildRecord){
+        ChildModel.create(child, {include:{all:true}}).then(function(newChildRecord){
           if (req._sails.hooks.pubsub) {
             if (req.isSocket) {
               ChildModel.subscribe(req, newChildRecord);

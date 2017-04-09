@@ -25,7 +25,7 @@ module.exports = function createRecord (req, res) {
     var data = actionUtil.parseValues(req);
 
     // Create new instance of model using data from params
-    Model.create(data).then(function(newInstance) {
+    Model.create(data, {include:{all:true}}).then(function(newInstance) {
         // If we have the pubsub hook, use the model class's publish method
         // to notify all subscribers about the created item
         if (req._sails.hooks.pubsub) {
